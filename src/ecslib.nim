@@ -1,7 +1,8 @@
 import
   std/tables,
   std/typetraits,
-  std/hashes
+  std/hashes,
+  std/macros
 
 
 type
@@ -110,3 +111,13 @@ proc deleteEntity(self: World, entity: Entity) =
 proc delete*(self: Entity) =
   self.world.deleteEntity(self)
   self.id = InvalidEntityId
+
+template systemized* {.pragma.}
+
+template bundle* {.pragma.}
+
+macro bundled*(theProc: untyped): untyped =
+  result = theProc
+  result.params[0] = ident"Entity"
+  result.params.insert 1, newIdentDefs(ident"entity", ident"Entity")
+  result.addPragma ident"bundle"

@@ -8,10 +8,10 @@ type Position = ref object
 type Name = ref object
   name: string
 
-proc echoPosition(pos: Position) =
+proc echoPosition(pos: Position) {.systemized.} =
   echo "x: ", pos.x, " y: ", pos.y
 
-proc updatePosition(pos: Position) =
+proc updatePosition(pos: Position) {.systemized.} =
   pos.x += 1
   pos.y += 1
 
